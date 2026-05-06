@@ -1,0 +1,577 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Truc Quan Tran · TinyFish</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --ivory:       hsl(38 30% 96%);
+      --ivory-tint:  hsl(38 24% 92%);
+      --espresso:    hsl(24 18% 12%);
+      --ink-mid:     hsl(24 10% 38%);
+      --ink-muted:   hsl(24 8% 60%);
+      --gold:        hsl(36 42% 44%);
+      --gold-light:  hsl(36 42% 72%);
+      --gold-pale:   hsl(36 38% 88%);
+      --hairline:    hsla(36 30% 40% / 0.22);
+      --hairline-strong: hsla(36 30% 40% / 0.42);
+      --radius:      4px;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { font-size: 16px; scroll-behavior: smooth; }
+
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background-color: var(--ivory);
+      background-image:
+        radial-gradient(ellipse 60% 40% at 20% 10%, hsla(36,52%,60%,0.07) 0%, transparent 70%),
+        radial-gradient(ellipse 50% 35% at 85% 80%, hsla(36,48%,55%,0.05) 0%, transparent 65%);
+      color: var(--espresso);
+      -webkit-font-smoothing: antialiased;
+      min-height: 100vh;
+    }
+
+    ::selection {
+      background: var(--gold-pale);
+      color: var(--espresso);
+    }
+
+    /* ── HEADER ── */
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      background: hsla(38,30%,96%,0.92);
+      backdrop-filter: blur(8px);
+      border-bottom: 1px solid var(--hairline-strong);
+    }
+
+    .header-inner {
+      max-width: 720px;
+      margin: 0 auto;
+      padding: 0.75rem 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 1.5rem;
+    }
+
+    .monogram {
+      font-family: 'DM Serif Display', serif;
+      font-style: italic;
+      font-size: 17px;
+      color: var(--espresso);
+      letter-spacing: -0.01em;
+      white-space: nowrap;
+    }
+
+    .header-tag {
+      font-size: 10.5px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--gold);
+      white-space: nowrap;
+    }
+
+    .header-contacts {
+      display: flex;
+      align-items: center;
+    }
+
+    .header-contacts a {
+      font-size: 11px;
+      color: var(--ink-mid);
+      text-decoration: none;
+      letter-spacing: 0.01em;
+      transition: color 0.18s;
+      white-space: nowrap;
+    }
+
+    .header-contacts a:hover { color: var(--espresso); }
+
+    .gold-sep {
+      color: var(--gold);
+      margin: 0 0.65rem;
+      font-size: 10px;
+      opacity: 0.7;
+    }
+
+    /* ── WRAP ── */
+    .wrap {
+      max-width: 720px;
+      margin: 0 auto;
+      padding: 0 2rem 5rem;
+    }
+
+    /* ── REVEAL ── */
+    .reveal {
+      opacity: 0;
+      transform: translateY(16px);
+      transition: opacity 0.75s cubic-bezier(0.2,0.7,0.1,1),
+                  transform 0.75s cubic-bezier(0.2,0.7,0.1,1);
+    }
+    .reveal.visible { opacity: 1; transform: none; }
+    .d1 { transition-delay: 0.08s; }
+    .d2 { transition-delay: 0.16s; }
+    .d3 { transition-delay: 0.24s; }
+
+    /* ── HERO ── */
+    .hero {
+      padding: 3rem 0 3.5rem;
+    }
+
+    .hero-eyebrow {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .lux-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--gold);
+      box-shadow: 0 0 0 3px hsla(36,42%,44%,0.15);
+      flex-shrink: 0;
+    }
+
+    .eyebrow-text {
+      font-size: 10.5px;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--gold);
+      font-weight: 400;
+    }
+
+    .hero-title {
+      font-family: 'DM Serif Display', serif;
+      font-size: clamp(34px, 6vw, 48px);
+      font-weight: 400;
+      line-height: 1.1;
+      letter-spacing: -0.01em;
+      color: var(--espresso);
+      margin-bottom: 1.5rem;
+      max-width: 600px;
+    }
+
+    .hero-title em {
+      font-style: italic;
+      color: var(--ink-mid);
+    }
+
+    .hero-body {
+      font-size: 14.5px;
+      font-weight: 300;
+      color: var(--ink-mid);
+      line-height: 1.82;
+      max-width: 520px;
+    }
+
+    /* ── HAIRLINE ── */
+    .hairline {
+      border: none;
+      border-top: 1px solid var(--hairline);
+      margin: 3rem 0;
+    }
+
+    /* ── SECTION HEAD ── */
+    .section-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      margin-bottom: 1.75rem;
+    }
+
+    .section-eyebrow {
+      font-size: 10px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--ink-muted);
+      font-weight: 400;
+    }
+
+    .section-marker {
+      font-family: 'DM Serif Display', serif;
+      font-style: italic;
+      font-size: 13px;
+      color: var(--gold-light);
+    }
+
+    /* ── PROFILE BLOCK ── */
+    .profile-row {
+      display: grid;
+      grid-template-columns: 120px 1fr;
+      gap: 0;
+      border-top: 1px solid var(--hairline);
+      padding: 1rem 0;
+    }
+
+    .profile-row:last-child { border-bottom: 1px solid var(--hairline); }
+
+    .profile-label {
+      font-size: 10.5px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--ink-muted);
+      padding-top: 2px;
+      font-weight: 400;
+    }
+
+    .profile-value {
+      font-size: 13.5px;
+      font-weight: 300;
+      color: var(--ink-mid);
+      line-height: 1.6;
+    }
+
+    .profile-value strong {
+      font-weight: 500;
+      color: var(--espresso);
+      display: block;
+      font-size: 14px;
+    }
+
+    /* ── EXP BULLETS ── */
+    .exp-bullets {
+      list-style: none;
+      margin-top: 0.25rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.6rem;
+    }
+
+    .exp-bullets li {
+      font-size: 13.5px;
+      font-weight: 300;
+      color: var(--ink-mid);
+      line-height: 1.7;
+      padding-left: 1rem;
+      position: relative;
+    }
+
+    .exp-bullets li::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 9px;
+      width: 5px;
+      height: 1px;
+      background: var(--gold-light);
+    }
+
+    /* ── WHY BLOCK ── */
+    .why-wrap {
+      background: var(--ivory-tint);
+      border: 1px solid var(--hairline);
+      border-left: 2px solid var(--gold);
+      border-radius: 0 var(--radius) var(--radius) 0;
+      padding: 1.5rem 1.75rem;
+    }
+
+    .why-wrap p {
+      font-family: 'DM Serif Display', serif;
+      font-size: 18px;
+      font-weight: 400;
+      line-height: 1.65;
+      color: var(--ink-mid);
+    }
+
+    .why-wrap p + p { margin-top: 1rem; }
+
+    .why-wrap strong {
+      font-style: italic;
+      color: var(--espresso);
+    }
+
+    /* ── FOCUS GRID ── */
+    .focus-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      border: 1px solid var(--hairline-strong);
+      border-radius: var(--radius);
+      overflow: hidden;
+      margin-bottom: 2.5rem;
+    }
+
+    .focus-card {
+      padding: 1.25rem 1.5rem;
+      border-right: 1px solid var(--hairline);
+      border-bottom: 1px solid var(--hairline);
+      transition: background 0.2s;
+    }
+
+    .focus-card:nth-child(2n) { border-right: none; }
+    .focus-card:nth-child(3), .focus-card:nth-child(4) { border-bottom: none; }
+    .focus-card:hover { background: var(--gold-pale); }
+
+    .focus-industry {
+      font-family: 'DM Serif Display', serif;
+      font-size: 17px;
+      font-weight: 400;
+      letter-spacing: -0.01em;
+      margin-bottom: 0.35rem;
+    }
+
+    .focus-pain {
+      font-size: 12px;
+      font-weight: 300;
+      color: var(--ink-muted);
+      line-height: 1.55;
+    }
+
+    /* ── PLAYBOOK ── */
+    .playbook {
+      border-top: 1px solid var(--hairline);
+    }
+
+    .playbook-row {
+      display: grid;
+      grid-template-columns: 140px 1fr;
+      gap: 1rem;
+      border-bottom: 1px solid var(--hairline);
+      padding: 1rem 0;
+    }
+
+    .playbook-label {
+      font-size: 10.5px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--ink-muted);
+      padding-top: 2px;
+      font-weight: 400;
+    }
+
+    .playbook-value {
+      font-size: 13.5px;
+      font-weight: 300;
+      color: var(--ink-mid);
+      line-height: 1.7;
+    }
+
+    .playbook-value em {
+      font-family: 'DM Serif Display', serif;
+      font-style: italic;
+      font-size: 15.5px;
+      color: var(--espresso);
+    }
+
+    /* ── FOOTER ── */
+    footer {
+      margin-top: 4rem;
+      padding-top: 1.5rem;
+      border-top: 1px solid var(--hairline-strong);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+
+    .footer-monogram {
+      font-family: 'DM Serif Display', serif;
+      font-style: italic;
+      font-size: 15px;
+      color: var(--espresso);
+    }
+
+    .footer-links {
+      display: flex;
+      align-items: center;
+    }
+
+    .footer-links a {
+      font-size: 11px;
+      color: var(--ink-muted);
+      text-decoration: none;
+      letter-spacing: 0.01em;
+      transition: color 0.18s, border-color 0.18s;
+      border-bottom: 1px solid transparent;
+      padding-bottom: 1px;
+    }
+
+    .footer-links a:hover {
+      color: var(--espresso);
+      border-color: var(--gold);
+    }
+
+    /* ── MOBILE ── */
+    @media (max-width: 540px) {
+      .wrap { padding: 0 1.25rem 4rem; }
+      .header-inner { padding: 0.65rem 1.25rem; }
+      .header-tag { display: none; }
+      .hero-title { font-size: 32px; }
+      .focus-grid { grid-template-columns: 1fr; }
+      .focus-card { border-right: none !important; }
+      .focus-card:nth-child(3) { border-bottom: 1px solid var(--hairline); }
+      .focus-card:last-child { border-bottom: none; }
+      .playbook-row { grid-template-columns: 1fr; gap: 0.3rem; }
+      .profile-row { grid-template-columns: 100px 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <div class="header-inner">
+    <div style="display:flex;align-items:center;gap:1.25rem;">
+      <span class="monogram">Truc Quan Tran</span>
+      <span class="header-tag">BDR · TinyFish</span>
+    </div>
+    <div class="header-contacts">
+      <a href="https://www.linkedin.com/in/tr%C3%BAc-qu%C3%A2n-tr%E1%BA%A7n-9797bb214/" target="_blank">LinkedIn</a>
+      <span class="gold-sep">·</span>
+      <a href="mailto:trucquan11072002@gmail.com">trucquan11072002@gmail.com</a>
+      <span class="gold-sep">·</span>
+      <a href="tel:+84382948037">+84 382 948 037</a>
+    </div>
+  </div>
+</header>
+
+<div class="wrap">
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-eyebrow reveal">
+      <div class="lux-dot"></div>
+      <span class="eyebrow-text">Application · BDR Intern · TinyFish</span>
+    </div>
+    <h1 class="hero-title reveal d1">
+      I use AI every day. Not to summarize emails, but to <em>build things.</em>
+    </h1>
+    <p class="hero-body reveal d2">
+      Chatbots that push internal comms to 700 people. Agents that replace the manual tasks nobody wants to do at 9pm. I'm at a large corp right now deliberately, learning how organizations actually run before I build one myself. TinyFish is the first place I've seen where both things I care about exist in the same room: AI that does real work, and a team that moves fast.
+    </p>
+  </section>
+
+  <hr class="hairline">
+
+  <!-- PROFILE -->
+  <section class="reveal">
+    <div class="section-head">
+      <span class="section-eyebrow">Profile</span>
+      <span class="section-marker">i.</span>
+    </div>
+
+    <div class="profile-row">
+      <span class="profile-label">Education</span>
+      <div class="profile-value">
+        <strong>Digital Marketing · FPT University</strong>
+        Da Nang, Vietnam
+      </div>
+    </div>
+
+    <div class="profile-row">
+      <span class="profile-label">Current role</span>
+      <div class="profile-value">
+        <strong>SPX Express (Shopee Express) · 2024–present</strong>
+        Operations · Headcount & Compliance
+      </div>
+    </div>
+
+    <div class="profile-row">
+      <span class="profile-label">Built</span>
+      <div class="profile-value">
+        <ul class="exp-bullets">
+          <li>Built a Python automation that pulls rider data from Google Sheets and updates the internal portal nightly, with Telegram alerts on error. Eliminated ~30 min of manual copy-paste per day</li>
+          <li>Deployed a Google Apps Script chatbot to auto-distribute policy updates and engagement content to 700 employees, saving ~30 min/week</li>
+          <li>Built a trigger-based reminder system for recurring ops workflows. Missed tasks reduced to near-zero</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <hr class="hairline">
+
+  <!-- WHY TINYFISH -->
+  <section class="reveal">
+    <div class="section-head">
+      <span class="section-eyebrow">Why TinyFish</span>
+      <span class="section-marker">ii.</span>
+    </div>
+    <div class="why-wrap">
+      <p>I used to copy rider data from Excel into our internal portal <strong>row by row.</strong> Every night. Until I couldn't take it anymore, so I built a script to do it automatically, with Telegram alerts whenever something broke.</p>
+      <p>That's the exact pain TinyFish solves. I just didn't have the infrastructure to fix it properly. I want to help other ops teams realize they're still copying rows, and that there's a better way.</p>
+    </div>
+  </section>
+
+  <hr class="hairline">
+
+  <!-- WHAT I'D FOCUS ON -->
+  <section class="reveal">
+    <div class="section-head">
+      <span class="section-eyebrow">What I'd focus on</span>
+      <span class="section-marker">iii.</span>
+    </div>
+
+    <div class="focus-grid">
+      <div class="focus-card">
+        <div class="focus-industry">Hospitality</div>
+        <div class="focus-pain">Hotel inventory aggregated from thousands of properties with no API</div>
+      </div>
+      <div class="focus-card">
+        <div class="focus-industry">E-commerce & Retail</div>
+        <div class="focus-pain">Competitor pricing monitored across thousands of SKUs daily</div>
+      </div>
+      <div class="focus-card">
+        <div class="focus-industry">Fintech</div>
+        <div class="focus-pain">Market rates, lending data and pricing signals pulled from public sources at scale</div>
+      </div>
+      <div class="focus-card">
+        <div class="focus-industry">Insurance</div>
+        <div class="focus-pain">Quotes auto-filled across carrier portals without manual input</div>
+      </div>
+    </div>
+
+    <div class="playbook">
+      <div class="playbook-row">
+        <span class="playbook-label">Who exactly</span>
+        <span class="playbook-value">Pricing Analysts, Revenue Managers, Ops Leads. People whose Friday afternoon is still a spreadsheet.</span>
+      </div>
+      <div class="playbook-row">
+        <span class="playbook-label">First message</span>
+        <span class="playbook-value">
+          No pitch. One specific observation, one question about their current process.<br><br>
+          <em>Hospitality:</em> "Noticed [company] aggregates inventory from independent properties. How does your team handle hotels with no booking API — scraping, or still manual?"<br><br>
+          <em>E-commerce:</em> "Saw [company] expanding into [market]. How often does your pricing team actually refresh competitor data across SKUs — daily, or more like weekly?"<br><br>
+          <em>Insurance:</em> "Teams I've spoken to at insurance aggregators spend hours filling carrier quote forms by hand. Still the case at [company], or have you found a way around it?"
+        </span>
+      </div>
+      <div class="playbook-row">
+        <span class="playbook-label">How I'd find them</span>
+        <span class="playbook-value"><em>Use TinyFish's own Search API to build the prospect list</em>, pull by title and industry, output to a sheet, prioritize by company size. Then reach out on LinkedIn, one specific pain per message, no templates.</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="reveal">
+    <span class="footer-monogram">Truc Quan Tran</span>
+    <div class="footer-links">
+      <a href="https://www.linkedin.com/in/tr%C3%BAc-qu%C3%A2n-tr%E1%BA%A7n-9797bb214/" target="_blank">LinkedIn</a>
+      <span class="gold-sep">·</span>
+      <a href="mailto:trucquan11072002@gmail.com">trucquan11072002@gmail.com</a>
+      <span class="gold-sep">·</span>
+      <a href="tel:+84382948037">+84 382 948 037</a>
+    </div>
+  </footer>
+
+</div>
+
+<script>
+  const io = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (e.isIntersecting) { e.target.classList.add('visible'); io.unobserve(e.target); }
+    });
+  }, { threshold: 0.08, rootMargin: '0px 0px -20px 0px' });
+  document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+</script>
+
+</body>
+</html>
